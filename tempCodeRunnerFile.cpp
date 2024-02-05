@@ -1,13 +1,9 @@
-string conversionToNewSystem(int decimalNumber,int newBase){
-//     string result = "";
-//     while(decimalNumber>0){
-//         int digit = decimalNumber%newBase;
-//         if(digit<10){
-//             result = to_string(digit) + result;
-//         }else{
-//             result = (char)(digit-10+'A') + result;
-//         }
-//         decimalNumber /= newBase;
-//     }
-//     return result;
-// }
+    cin >> n;
+    for(int i=0;i<n;i++){
+        cin >> numbers[i];
+        cin >> base[i];
+        cin >> newBase[i];
+    }
+    for(int i=0;i<n;i++){
+        cout<<conversionToNewSystem(conversionToDecimal(numbers[i],base[i]),newBase[i])<<endl;
+    }
