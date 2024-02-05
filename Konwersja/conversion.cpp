@@ -4,7 +4,7 @@
 using namespace std;
 
 //Dodawanie dwoch liczb w stringu (liczby sa w tym samym systemie)
-string addNumber(string numberToAdd, string number, int base){
+string addNumber(string &numberToAdd, string &number, int base){
     string result = "";
     //numberToAdd - liczba dluzsza (ma wiecej znakow)
     if(numberToAdd.length()<number.length()){
@@ -64,7 +64,7 @@ string divideNumber(string numberToDivide, int base, int divider){
     return result;
 }
 
-int restOfDivideNumber(string numberToDivide, int base, int divider){
+int restOfDivideNumber(string &numberToDivide, int base, int divider){
     int restResult = 0;
     string result = "";
     int index = 0;
@@ -91,10 +91,11 @@ int restOfDivideNumber(string numberToDivide, int base, int divider){
 
 //Mnozenie liczb (dziesietnych) zrobimy pdobnie do dzielenia, pomnozymy pod kreska, z tym ze druga liczbe nie bedziemy mnozyc przez kazda cyfre osobno, lecz po prostu przez cala liczbe
 //odpowiedniej cyfrze dodawac bedziem zera znaczace
-string multipliesNumber(string numberToMultiply, int multplier){
+string multipliesNumber(string &numberToMultiply, int multplier){
     string result = "0";
     int length = numberToMultiply.length();
     int index = 0;
+    string tempString = "";
     for(int i=0;i<length;i++){
         int digit = numberToMultiply[i] - '0';
         int temp = digit*multplier;
@@ -108,19 +109,19 @@ string multipliesNumber(string numberToMultiply, int multplier){
 }
 
 //zamiana dowolnej liczby na system dziesietny
-string conversionToDecimal(string number, int base){
+string conversionToDecimal(string &number, int base){
     string result = "0";
     int power = 0;
+    string element="";
     for(int i=number.length()-1;i>=0;i--){
         if(number[i]>='0' && number[i]<='9'){
-
-            string element = to_string(number[i]-'0');
+            element = to_string(number[i]-'0');
             for(int j=0;j<power;j++){
                 element = multipliesNumber(element,base);
             }
             result = addNumber(result,element,10);
         }else{
-            string element = to_string(number[i]-'A'+10);
+                element = to_string(number[i]-'A'+10);
             for(int j=0;j<power;j++){
                 element = multipliesNumber(element,base);
             }
@@ -132,7 +133,7 @@ string conversionToDecimal(string number, int base){
 }
 
 //zamiana systemu dziesietnego na dowolny
-string conversionToNewSystem(string decimalNumber,int newBase){
+string conversionToNewSystem(string &decimalNumber,int newBase){
     if (decimalNumber == "0") return "0";
 
     string result = "";
@@ -155,17 +156,18 @@ int main() {
     int base [1000];    //aktualna podstawa 3liczby
     int newBase[1000];  //nowa podstawa
     int n;              //ilosc liczb
-    // cin >> n;
-    // for(int i=0;i<n;i++){
-    //     cin >> numbers[i];
-    //     cin >> base[i];
-    //     cin >> newBase[i];
-    // }
-    // for(int i=0;i<n;i++){
-    //     cout<<conversionToNewSystem(conversionToDecimal(numbers[i],base[i]),newBase[i])<<endl;
-    // }
+    cin >> n;
+    for(int i=0;i<n;i++){
+        cin >> numbers[i];
+        cin >> base[i];
+        cin >> newBase[i];
+    }
+    string decimalNumber = "";
+    for(int i=0;i<n;i++){
+        decimalNumber = conversionToDecimal(numbers[i],base[i]);
+        cout<<conversionToNewSystem(decimalNumber,newBase[i])<<endl;
+    }
 
-    cout<<conversionToNewSystem(conversionToDecimal("123456789012345678901234567890",10),16)<<endl;
 
     return 0;
 }
