@@ -155,15 +155,17 @@ int main() {
     int base [1000];    //aktualna podstawa 3liczby
     int newBase[1000];  //nowa podstawa
     int n;              //ilosc liczb
-    cin >> n;
-    for(int i=0;i<n;i++){
-        cin >> numbers[i];
-        cin >> base[i];
-        cin >> newBase[i];
-    }
-    for(int i=0;i<n;i++){
-        cout<<conversionToNewSystem(conversionToDecimal(numbers[i],base[i]),newBase[i])<<endl;
-    }
+    // cin >> n;
+    // for(int i=0;i<n;i++){
+    //     cin >> numbers[i];
+    //     cin >> base[i];
+    //     cin >> newBase[i];
+    // }
+    // for(int i=0;i<n;i++){
+    //     cout<<conversionToNewSystem(conversionToDecimal(numbers[i],base[i]),newBase[i])<<endl;
+    // }
+
+    cout<<conversionToNewSystem(conversionToDecimal("123456789012345678901234567890",10),16)<<endl;
 
     return 0;
 }
