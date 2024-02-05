@@ -89,7 +89,23 @@ int restOfDivideNumber(string numberToDivide, int base, int divider){
     return restResult;
 }
 
-
+//Mnozenie liczb (dziesietnych) zrobimy pdobnie do dzielenia, pomnozymy pod kreska, z tym ze druga liczbe nie bedziemy mnozyc przez kazda cyfre osobno, lecz po prostu przez cala liczbe
+//odpowiedniej cyfrze dodawac bedziem zera znaczace
+string multipliesNumber(string numberToMultiply, int multplier){
+    string result = "0";
+    int length = numberToMultiply.length();
+    int index = 0;
+    for(int i=0;i<length;i++){
+        int digit = numberToMultiply[i] - '0';
+        int temp = digit*multplier;
+        string tempString = to_string(temp);
+        for(int j=i;j<length-1;j++){
+            tempString = tempString+"0";
+        }
+        result = addNumber(result,tempString,10);
+    }
+    return result;
+}
 
 //zamiana dowolnej liczby na system dziesietny
 string conversionToDecimal(string number, int base){
@@ -97,15 +113,18 @@ string conversionToDecimal(string number, int base){
     int power = 0;
     for(int i=number.length()-1;i>=0;i--){
         if(number[i]>='0' && number[i]<='9'){
-            //string number = convertBigNumberToString((number[i]-'0'),base,power);
 
-            long long element = (number[i]-'0')*pow(base,power);
-            result = addNumber(result,to_string(element),10);
+            string element = to_string(number[i]-'0');
+            for(int j=0;j<power;j++){
+                element = multipliesNumber(element,base);
+            }
+            result = addNumber(result,element,10);
         }else{
-            //string number = convertBigNumberToString((number[i]-'A'),base,power);
-
-            long long element = (number[i]-'A'+10)*pow(base,power);
-            result = addNumber(result,to_string(element),10);
+            string element = to_string(number[i]-'A'+10);
+            for(int j=0;j<power;j++){
+                element = multipliesNumber(element,base);
+            }
+            result = addNumber(result,element,10);
         }
         power++;
     }
@@ -146,7 +165,7 @@ int main() {
         cout<<conversionToNewSystem(conversionToDecimal(numbers[i],base[i]),newBase[i])<<endl;
     }
 
-    
-
     return 0;
 }
+// Rozwiazanie zawiera komentrze, lecz przez limit wielkosc rozwiazania (5000 bytes) musialem je usunac
+// pelne rozwiazanie wraz z odpowiednimi komentarzami znajduje sie na moim githubie https://github.com/WajHub/PAA_spoj )
