@@ -59,7 +59,6 @@ int restOfDivideNumber(string &numberToDivide, int base, int divider){
         result += to_string(digit/divider);
             if(index==numberToDivide.length()-1) restResult = digit%divider;
         digit = (digit%divider)*base + (numberToDivide[++index] - '0');
-
     }
     if(result.length()==0)  result = "0";
     return restResult;
@@ -102,7 +101,7 @@ string conversionToDecimal(string &number, int base){
             for(int j=0;j<power;j++) element = multipliesNumber(element,base);
             result = addNumber(result,element,10);
         }else{
-                element = to_string(number[i]-'A'+10);
+            element = to_string(number[i]-'A'+10);
             for(int j=0;j<power;j++) element = multipliesNumber(element,base);
             
             result = addNumber(result,element,10);
@@ -124,20 +123,18 @@ string conversionToNewSystem(string &decimalNumber,int newBase){
     return result;
 }
 int main() {
-    string numbers [1000];
-    int base [1000];    
-    int newBase[1000];  
+    string number;
+    string decimalNumber = "";
+    int base ;    
+    int newBase;  
     int n;              
     cin >> n;
     for(int i=0;i<n;i++){
-        cin >> numbers[i];
-        cin >> base[i];
-        cin >> newBase[i];
-    }
-    string decimalNumber = "";
-    for(int i=0;i<n;i++){
-        decimalNumber = conversionToDecimal(numbers[i],base[i]);
-        cout<<conversionToNewSystem(decimalNumber,newBase[i])<<endl;
+        cin >> number;
+        cin >> base;
+        cin >> newBase;
+        decimalNumber = conversionToDecimal(number,base);
+        cout<<conversionToNewSystem(decimalNumber,newBase)<<endl;
     }
     return 0;
 }
