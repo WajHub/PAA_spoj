@@ -1,9 +1,3 @@
-    // cin >> n;
-    // for(int i=0;i<n;i++){
-    //     cin >> numbers[i];
-    //     cin >> base[i];
-    //     cin >> newBase[i];
-    // }
-    // for(int i=0;i<n;i++){
-    //     cout<<conversionToNewSystem(conversionToDecimal(numbers[i],base[i]),newBase[i])<<endl;
-    // }
+        // for(int g=0;g<lengthResult;g++){
+        //     cout<<result[g]+48;
+        // }

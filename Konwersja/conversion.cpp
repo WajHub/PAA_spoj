@@ -91,22 +91,40 @@ int restOfDivideNumber(string &numberToDivide, int base, int divider){
 
 //Mnozenie liczb (dziesietnych) zrobimy pdobnie do dzielenia, pomnozymy pod kreska, z tym ze druga liczbe nie bedziemy mnozyc przez kazda cyfre osobno, lecz po prostu przez cala liczbe
 //odpowiedniej cyfrze dodawac bedziem zera znaczace
+//inspiracja: https://www.tutorialspoint.com/multiply-large-numbers-represented-as-strings-in-cplusplus
 string multipliesNumber(string &numberToMultiply, int multplier){
-    string result = "0";
+    if(numberToMultiply == "0") return "0";
+    if(multplier == 0) return "0";
+    string result(numberToMultiply.length()+2,0);
     int length = numberToMultiply.length();
-    int index = 0;
-    string tempString = "";
-    for(int i=0;i<length;i++){
-        int digit = numberToMultiply[i] - '0';
-        int temp = digit*multplier;
-        string tempString = to_string(temp);
-        for(int j=i;j<length-1;j++){
-            tempString = tempString+"0";
+    int lengthResult = result.length();
+    int digit = 0;
+    string temp = "";
+    for (int i=0;i<length;i++){
+        digit = (numberToMultiply[length-i-1])-'0';
+        digit = digit * multplier;
+        temp = to_string(digit);
+        for (int j=0;j<temp.length();j++){
+            if( result[lengthResult-i-j-1] + digit%10>=10){
+                result[lengthResult-i-j-2] += 1;
+                result[lengthResult-i-j-1] += digit%10-10;
+            }
+            else{
+                result[lengthResult-i-j-1] += digit%10;
+            }
+            
+            digit = digit/10;
         }
-        result = addNumber(result,tempString,10);
     }
+    for(int i=0;i<lengthResult;i++){
+        result[i] += 48;
+    }
+    if(result[0]=='0' or result[0]=='\0') result = result.substr(1);
+    if(result[0]=='0' or result[0]=='\0') result = result.substr(1);
     return result;
 }
+
+
 
 //zamiana dowolnej liczby na system dziesietny
 string conversionToDecimal(string &number, int base){
@@ -150,23 +168,67 @@ string conversionToNewSystem(string &decimalNumber,int newBase){
     return result;
 }
 
+string multiplyTwoNumbers(string num1, string num2) {
+   if (num1 == "0" || num2 == "0") {
+      return "0";
+   }
+   string product(num1.size() + num2.size(), 0);
+   for (int i = num1.size() - 1; i >= 0; i--) {
+      for (int j = num2.size() - 1; j >= 0; j--) {
+            int n = (num1[i] - '0') * (num2[j] - '0') + product[i + j + 1];
+            product[i + j + 1] = n % 10;
+            product[i + j] += n / 10;
+      }
+   }
+   for (int i = 0; i < product.size(); i++) {
+      product[i] += '0';
+   }
+   if (product[0] == '0') {
+      return product.substr(1);
+   }
+   return product;
+}
+
 
 int main() {
-    string numbers [1000];
-    int base [1000];    //aktualna podstawa 3liczby
-    int newBase[1000];  //nowa podstawa
-    int n;              //ilosc liczb
-    cin >> n;
-    for(int i=0;i<n;i++){
-        cin >> numbers[i];
-        cin >> base[i];
-        cin >> newBase[i];
-    }
-    string decimalNumber = "";
-    for(int i=0;i<n;i++){
-        decimalNumber = conversionToDecimal(numbers[i],base[i]);
-        cout<<conversionToNewSystem(decimalNumber,newBase[i])<<endl;
-    }
+    string number = "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+    string number2 = "35";
+
+    auto start = std::chrono::high_resolution_clock::now();
+    cout<<multipliesNumber(number,35)<<endl;
+    auto end = std::chrono::high_resolution_clock::now();
+
+    // Obliczenie czasu trwania
+    std::chrono::duration<double> duration = end - start;
+
+    // Wyświetlenie czasu trwania w sekundach
+    std::cout << "Czas wykonania funkcji: " << duration.count() << " sekundy" << std::endl;
+
+start = std::chrono::high_resolution_clock::now();
+    cout<<multiplyTwoNumbers(number,number2)<<endl;
+     end = std::chrono::high_resolution_clock::now();
+
+    // Obliczenie czasu trwania
+    duration = end - start;
+
+    // Wyświetlenie czasu trwania w sekundach
+    std::cout << "Czas wykonania funkcji: " << duration.count() << " sekundy" << std::endl;
+
+    // string numbers [1000];
+    // int base [1000];    //aktualna podstawa 3liczby
+    // int newBase[1000];  //nowa podstawa
+    // int n;              //ilosc liczb
+    // cin >> n;
+    // for(int i=0;i<n;i++){
+    //     cin >> numbers[i];
+    //     cin >> base[i];
+    //     cin >> newBase[i];
+    // }
+    // string decimalNumber = "";
+    // for(int i=0;i<n;i++){
+    //     decimalNumber = conversionToDecimal(numbers[i],base[i]);
+    //     cout<<conversionToNewSystem(decimalNumber,newBase[i])<<endl;
+    // }
 
 
     return 0;
