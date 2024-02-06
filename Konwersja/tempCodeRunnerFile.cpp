@@ -1,3 +1,2 @@
-        // for(int g=0;g<lengthResult;g++){
-        //     cout<<result[g]+48;
-        // }
+    string nubmer = "XY";
+    cout<<conversionToNewSystem(nubmer,36,2)<<endl;
